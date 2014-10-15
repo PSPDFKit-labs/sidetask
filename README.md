@@ -28,9 +28,9 @@ Convenience functions for adding and deleting sidejob resources are provided.
 SideTask.add_resource(:example1, 50)
 potential_tasks = for i <- 1..100 do
   case SideTask.async(:example1, fn -> :timer.sleep(1000); i end) do
-    {:ok, pid} ->
+    {:ok, task} ->
       IO.puts "Task #{i} created"
-      pid
+      task
     {:error, :overload} ->
       IO.puts "Task #{i} not created, overloaded"
       nil
