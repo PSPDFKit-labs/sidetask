@@ -6,6 +6,7 @@ defmodule SideTask.Mixfile do
      version: "0.1.0",
      elixir: "~> 1.0",
      source_url: "https://github.com/MSch/sidetask",
+     licenses: ["Apache 2.0"],
      deps: deps]
   end
 
