@@ -1,8 +1,10 @@
 SideTask
 ========
 
-SideTask is an alternative to Elixir's `Task.Supervisor` that uses Basho's `sidejob` library for
-better parallelism and to support capacity limiting.
+SideTask is an alternative to Elixir's
+[Task.Supervisor](http://elixir-lang.org/docs/stable/elixir/Task.Supervisor.html) that uses Basho's
+[sidejob](https://github.com/basho/sidejob) library for better parallelism and to support capacity
+limiting of [Tasks](http://elixir-lang.org/docs/stable/elixir/Task.html).
 
 Elixir's `Task.Supervisor` is implemented as a single `:simple_one_for_one` supervisor with the
 individual `Task`s as children. This means starting a new task has to go through this single
