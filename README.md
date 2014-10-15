@@ -41,6 +41,8 @@ IO.inspect for task = %Task{} <- potential_tasks, do: Task.await(task)
 
 ## Example 2
 
+![Observer while running example 2](https://raw.githubusercontent.com/MSch/sidetask/gh-pages/observer.png)
+
 ```elixir
 # Erlang spawns one scheduler per CPU core by default
 schedulers = :erlang.system_info(:schedulers)
