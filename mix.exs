@@ -1,4 +1,4 @@
-defmodule Sidetask.Mixfile do
+defmodule SideTask.Mixfile do
   use Mix.Project
 
   def project do

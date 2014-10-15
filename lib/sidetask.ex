@@ -1,2 +1,2 @@
-defmodule Sidetask do
+defmodule SideTask do
 end

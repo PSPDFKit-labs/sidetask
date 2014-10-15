@@ -1,4 +1,4 @@
-Sidetask
+SideTask
 ========
 
 ** TODO: Add description **
