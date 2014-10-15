@@ -5,7 +5,7 @@ defmodule SideTask do
 
   Elixir's `Task.Supervisor` is implemented as a single `:simple_one_for_one` supervisor with the
   individual `Task`s as children. This means starting a new task has to go through this single
-  supervisor. Furthermore there is no limit to the number of works that can be running at the same
+  supervisor. Furthermore there is no limit to the number of workers that can be running at the same
   time.
 
   Basho's `sidejob` library spawns multiple supervisors (one for each scheduler by default) and
@@ -13,7 +13,7 @@ defmodule SideTask do
   workers in parallel while also putting an upper bound on the number of running workers.
 
   This module provides an API similar to `Task.Supervisor`, with the addition that all calls that
-  starting a new task require a sidejob resource as argument and can return `{:error, :overload}`.
+  start a new task require a sidejob resource as argument and can return `{:error, :overload}`.
 
   The `add_resource/2` and `delete_resource/1` functions are provided as convenience.
 
