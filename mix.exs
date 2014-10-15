@@ -18,7 +18,7 @@ defmodule SideTask.Mixfile do
     [
       {:earmark, "~> 0.1", only: :dev},
       {:ex_doc, "~> 0.6", only: :dev},
-      {:sidejob, github: "basho/sidejob", tag: "2.0.0"},
+      {:sidejob, "~> 2.0"},
     ]
   end
 end
