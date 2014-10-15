@@ -1,6 +1,8 @@
 SideTask
 ========
 
+[![Build Status](https://travis-ci.org/MSch/sidetask.svg)](https://travis-ci.org/MSch/sidetask)
+
 SideTask is an alternative to Elixir's
 [Task.Supervisor](http://elixir-lang.org/docs/stable/elixir/Task.Supervisor.html) that uses Basho's
 [sidejob](https://github.com/basho/sidejob) library for better parallelism and to support capacity
