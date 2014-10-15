@@ -1,0 +1,1 @@
+%{"sidejob": {:git, "git://github.com/basho/sidejob.git", "c5aabba2d7daa80c340e110902bbcfcb552ccdcf", [tag: "2.0.0"]}}
