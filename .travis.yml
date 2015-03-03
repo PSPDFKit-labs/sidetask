@@ -1,14 +1,16 @@
-language: erlang
+language: elixir
+elixir:
+  - 1.0.0
+  - 1.0.1
+  - 1.0.2
+  - 1.0.3
 otp_release:
+  - 17.0
   - 17.1
-before_install:
-  - wget https://github.com/elixir-lang/elixir/releases/download/v1.0.1/Precompiled.zip -O elixir.zip
-  - unzip -d elixir elixir.zip
-  - export PATH=$(pwd)/elixir/bin:$PATH
-  - mix do local.hex --force, local.rebar
-  - mix do deps.get, deps.compile, compile
+  - 17.4
+sudo: false # to use faster container based build environment
 script:
   - mix test
 notifications:
   recipients:
-    - martin@schuerrer.org
+    - martin@pspdfkit.com
