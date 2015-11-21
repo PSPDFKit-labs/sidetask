@@ -31,7 +31,7 @@ defmodule SideTask do
   """
   @spec add_resource(resource, non_neg_integer) :: :ok
   def add_resource(name, limit) when is_atom(name) and is_integer(limit) do
-    {:ok, _} = :sidejob.new_resource(name, :sidejob_supervisor, limit)
+    {:ok, _} = :sidejob.new_resource(name, SideTask.Supervisor, limit)
     :ok
   end
 
@@ -61,7 +61,7 @@ defmodule SideTask do
   @spec async(resource, module, atom, [term]) :: {:ok, Task.t} | {:error, :overload}
   def async(sidejob_resource, module, fun, args) do
     args = [self, get_info(self), {module, fun, args}]
-    case :sidejob_supervisor.start_child(sidejob_resource, Task.Supervised, :start_link, args) do
+    case SideTask.Supervisor.start_child(sidejob_resource, Task.Supervised, :start_link, args) do
       {:ok, pid} ->
         ref = Process.monitor(pid)
         send pid, {self(), ref}
@@ -90,7 +90,7 @@ defmodule SideTask do
   @spec start_child(resource, module, atom, [term]) :: {:ok, pid} | {:error, :overload}
   def start_child(sidejob_resource, module, fun, args) do
     args = [get_info(self), {module, fun, args}]
-    :sidejob_supervisor.start_child(sidejob_resource, Task.Supervised, :start_link, args)
+    SideTask.Supervisor.start_child(sidejob_resource, Task.Supervised, :start_link, args)
   end
 
   # from Task.Supervisor.get_info
