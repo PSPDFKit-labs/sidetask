@@ -36,8 +36,8 @@ defmodule SideTask.Mixfile do
 
   defp deps do
     [
-      {:earmark, "~> 0.1", only: :dev},
-      {:ex_doc, "~> 0.6", only: :dev},
+      {:earmark, "> 0.0.0", only: :dev},
+      {:ex_doc, "> 0.0.0", only: :dev},
       {:sidejob, "~> 2.0"},
     ]
   end
