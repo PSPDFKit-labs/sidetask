@@ -28,7 +28,7 @@ defmodule SideTask.Mixfile do
   end
 
   defp package do
-    [contributors: ["Martin Schurrer"],
+    [maintainers: ["Martin Schurrer"],
      licenses: ["Apache 2.0"],
      links: %{"GitHub" => "https://github.com/MSch/sidetask"},
      files: ["lib", "mix.exs", "README.md"]]
