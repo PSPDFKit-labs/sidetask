@@ -17,20 +17,22 @@ defmodule SideTask do
 
   The `add_resource/2` and `delete_resource/1` functions are provided as convenience.
 
-  Name Registration
-  A sidejob resource registers multiple local names. Read more about it in the sidejob docs.
+  ## Name Registration
+
+  A sidejob resource registers multiple local names. Read more about it in the sidejob docs at
+  https://github.com/basho/sidejob.
   """
 
   @typedoc "The sidejob resource"
   @type resource :: atom
 
   @doc """
-  Create a new sidejob resource that enforces the requested usage limit.
+  Creates a new sidejob resource that enforces the requested usage limit.
 
   See `:sidejob.new_resource/4` for details.
   """
   @spec add_resource(resource, non_neg_integer) :: :ok
-  def add_resource(name, limit) when is_atom(name) and is_integer(limit) do
+  def add_resource(name, limit) when is_atom(name) and is_integer(limit) and limit >= 0 do
     {:ok, _} = :sidejob.new_resource(name, SideTask.Supervisor, limit)
     :ok
   end
@@ -38,57 +40,62 @@ defmodule SideTask do
   @doc """
   Deletes an existing sidejob resource.
   """
-  @spec delete_resource(resource) :: :ok | {:error, error}
-        when error: :not_found | :running | :restarting
+  @spec delete_resource(resource) :: :ok | {:error, :not_found | :running | :restarting}
   def delete_resource(name) when is_atom(name) do
     case Supervisor.terminate_child(:sidejob_sup, name) do
-      :ok -> Supervisor.delete_child(:sidejob_sup, name)
+      :ok   -> Supervisor.delete_child(:sidejob_sup, name)
       error -> error
     end
   end
 
   @doc """
-  Starts a task that can be awaited on as child of the given `sidejob_resource`
+  Starts a task that can be awaited on as a child of the given `sidejob_resource`.
   """
   @spec async(resource, fun) :: {:ok, Task.t} | {:error, :overload}
-  def async(sidejob_resource, fun) do
+  def async(sidejob_resource, fun) when is_atom(sidejob_resource) and is_function(fun, 0) do
     async(sidejob_resource, :erlang, :apply, [fun, []])
   end
 
   @doc """
-  Starts a task that can be awaited on as child of the given `sidejob_resource`
+  Starts a task that can be awaited on as a child of the given `sidejob_resource`.
   """
   @spec async(resource, module, atom, [term]) :: {:ok, Task.t} | {:error, :overload}
-  def async(sidejob_resource, module, fun, args) do
-    args = [self, get_info(self), {module, fun, args}]
+  def async(sidejob_resource, module, fun, args)
+    when is_atom(sidejob_resource) and is_atom(module) and is_atom(fun) and is_list(args)
+  do
+    owner = self()
+    args = [owner, :link, get_info(owner), {module, fun, args}]
     case SideTask.Supervisor.start_child(sidejob_resource, Task.Supervised, :start_link, args) do
       {:ok, pid} ->
+        Process.link(pid)
         ref = Process.monitor(pid)
-        send pid, {self(), ref}
-        {:ok, %Task{pid: pid, ref: ref}}
+        send(pid, {owner, ref})
+        {:ok, %Task{pid: pid, ref: ref, owner: owner}}
       {:error, :overload} -> {:error, :overload}
     end
   end
 
   @doc """
-  Starts a task as child of the given `sidejob_resource`.
+  Starts a task as a child of the given `sidejob_resource`.
 
   Note that the spawned process is not linked to the caller, but only to the sidejob resource's
   supervisor.
   """
   @spec start_child(resource, fun) :: {:ok, pid} | {:error, :overload}
-  def start_child(sidejob_resource, fun) do
+  def start_child(sidejob_resource, fun) when is_atom(sidejob_resource) and is_function(fun, 0) do
     start_child(sidejob_resource, :erlang, :apply, [fun, []])
   end
 
   @doc """
-  Starts a task as child of the given `sidejob_resource`.
+  Starts a task as a child of the given `sidejob_resource`.
 
   Note that the spawned process is not linked to the caller, but only to the sidejob resource's
   supervisor.
   """
   @spec start_child(resource, module, atom, [term]) :: {:ok, pid} | {:error, :overload}
-  def start_child(sidejob_resource, module, fun, args) do
+  def start_child(sidejob_resource, module, fun, args)
+    when is_atom(sidejob_resource) and is_atom(module) and is_atom(fun) and is_list(args)
+  do
     args = [get_info(self), {module, fun, args}]
     SideTask.Supervisor.start_child(sidejob_resource, Task.Supervised, :start_link, args)
   end
