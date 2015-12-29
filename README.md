@@ -58,3 +58,7 @@ end
 ```
 
 ![Observer while running example 2](https://raw.githubusercontent.com/MSch/sidetask/gh-pages/observer.png)
+
+## License
+
+This software is licensed under [the MIT license](LICENSE).
