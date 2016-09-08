@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.1
+
+* Updated deps and Hex package info
+
 ## v1.1.0
 
 * SideTask now requires Elixir 1.2.0 or greater to support changes in Elixir 1.2's `Task`.

@@ -3,12 +3,12 @@ defmodule SideTask.Mixfile do
 
   def project do
     [app: :sidetask,
-     version: "1.1.0",
+     version: "1.1.1",
      elixir: ">= 1.2.0",
      source_url: "https://github.com/PSPDFKit-labs/sidetask",
-     description: description,
-     package: package,
-     deps: deps]
+     description: description(),
+     package: package(),
+     deps: deps()]
   end
 
   def application do
