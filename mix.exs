@@ -28,10 +28,13 @@ defmodule SideTask.Mixfile do
   end
 
   defp package do
-    [maintainers: ["Martin Schurrer"],
-     licenses: ["Apache 2.0"],
-     links: %{"GitHub" => "https://github.com/MSch/sidetask"},
-     files: ["lib", "mix.exs", "README.md"]]
+    [maintainers: ["PSPDFKit"],
+     licenses: ["MIT"],
+     links: %{
+       "GitHub" => "https://github.com/MSch/sidetask",
+       "PSPDFKit" => "https://pspdfkit.com",
+     },
+     files: ["lib", "mix.exs", "README.md", "LICENSE"]]
   end
 
   defp deps do
