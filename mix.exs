@@ -3,12 +3,12 @@ defmodule SideTask.Mixfile do
 
   def project do
     [app: :sidetask,
-     version: "1.1.0",
+     version: "1.1.1",
      elixir: ">= 1.2.0",
      source_url: "https://github.com/PSPDFKit-labs/sidetask",
-     description: description,
-     package: package,
-     deps: deps]
+     description: description(),
+     package: package(),
+     deps: deps()]
   end
 
   def application do
@@ -28,10 +28,13 @@ defmodule SideTask.Mixfile do
   end
 
   defp package do
-    [maintainers: ["Martin Schurrer"],
-     licenses: ["Apache 2.0"],
-     links: %{"GitHub" => "https://github.com/MSch/sidetask"},
-     files: ["lib", "mix.exs", "README.md"]]
+    [maintainers: ["PSPDFKit"],
+     licenses: ["MIT"],
+     links: %{
+       "GitHub" => "https://github.com/MSch/sidetask",
+       "PSPDFKit" => "https://pspdfkit.com",
+     },
+     files: ["lib", "mix.exs", "README.md", "LICENSE"]]
   end
 
   defp deps do
