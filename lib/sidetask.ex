@@ -64,7 +64,7 @@ defmodule SideTask do
     when is_atom(sidejob_resource) and is_atom(module) and is_atom(fun) and is_list(args)
   do
     owner = self()
-    args = [owner, :link, get_info(owner), {module, fun, args}]
+    args = [owner, :monitor, get_info(owner), {module, fun, args}]
     case SideTask.Supervisor.start_child(sidejob_resource, Task.Supervised, :start_link, args) do
       {:ok, pid} ->
         Process.link(pid)
