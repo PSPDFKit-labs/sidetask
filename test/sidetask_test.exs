@@ -52,7 +52,7 @@ defmodule SideTaskTest do
     assert is_reference task.ref
 
     # Assert the link
-    {:links, links} = Process.info(self, :links)
+    {:links, links} = Process.info(self(), :links)
     assert task.pid in links
 
     receive do: (:ready -> :ok)
@@ -86,7 +86,7 @@ defmodule SideTaskTest do
     fun = fn -> wait_and_send(parent, :done) end
     {:ok, pid} = SideTask.start_child(config[:resource], fun)
 
-    {:links, links} = Process.info(self, :links)
+    {:links, links} = Process.info(self(), :links)
     refute pid in links
 
     receive do: (:ready -> :ok)
@@ -100,7 +100,7 @@ defmodule SideTaskTest do
   test "start_child/3", config do
     {:ok, pid} = SideTask.start_child(config[:resource], __MODULE__, :wait_and_send, [self(), :done])
 
-    {:links, links} = Process.info(self, :links)
+    {:links, links} = Process.info(self(), :links)
     refute pid in links
 
     receive do: (:ready -> :ok)
