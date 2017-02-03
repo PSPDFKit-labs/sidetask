@@ -3,7 +3,7 @@ defmodule SideTask.Mixfile do
 
   def project do
     [app: :sidetask,
-     version: "1.1.1",
+     version: "1.1.2",
      elixir: ">= 1.2.0",
      source_url: "https://github.com/PSPDFKit-labs/sidetask",
      description: description(),
@@ -18,12 +18,8 @@ defmodule SideTask.Mixfile do
   defp description do
     """
     SideTask is an alternative to Elixir's Task.Supervisor that uses Basho's sidejob library for
-    better parallelism and to support capacity limiting of Tasks.
-
-    SideTask provides an API similar to Task.Supervisor, with the addition that all calls that start
-    a new task require a sidejob resource as argument and can return `{:error, :overload}`.
-
-    Convenience functions for adding and deleting sidejob resources are provided.
+    better parallelism and to support capacity limiting of Tasks. All calls that start a new task
+    require a sidejob resource as argument and can return `{:error, :overload}`.
     """
   end
 

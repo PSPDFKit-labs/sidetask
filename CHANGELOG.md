@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.2
+
+* Upgraded for Elixir 1.4.
+
 ## v1.1.1
 
 * Updated deps and Hex package info
